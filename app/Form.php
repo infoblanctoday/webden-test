@@ -51,7 +51,23 @@ class Form
 
 	protected function validate($str, $method)
 	{
-		return true;
+		if ($method == 'string') {
+			if (is_string($str)) {
+				if (!empty($str)) {
+					$str = trim($str);
+					$str = htmlspecialchars($str);
+					if (!preg_match('/[^A-Za-z]/', $str)){
+						if (strlen($str) >= 2 && strlen($str) < 25) {
+							return true;
+						}
+					}
+					return false;
+				}
+				return false;
+			}
+			return false;
+		}
+		return false;
 	}
 
 }
