@@ -10,6 +10,28 @@
 	<input type="text" name="surname">
 	<button id="send">Send</button>
 </div>
+<div id="response"></div>
+
+<table>
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Surname</th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php 
+
+		foreach ($table as $key => $value) {
+			echo "<tr>";
+			echo "<td>".$value["name"]."</td>";
+			echo "<td>".$value["surname"]."</td>";
+			echo "</tr>";
+		}
+
+	?>
+	</tbody>
+</table>
 
 <script type="text/javascript">
 	document.getElementById('send').addEventListener('click', function() {
@@ -22,7 +44,7 @@
 		formData.append('name', name.value);
 		formData.append('surname', name.value);
 
-		fetch('/?action=submit', {
+		fetch('?action=submit', {
 			method: 'POST',
 			body: formData
 		})
@@ -30,17 +52,8 @@
 			return response.json();
 		})
 		.then(function(data) {
-			console.log(data);
-			if(data.success) {
-		        
-		    } else {
-		    	console.log('bad')
-		        // proccess server errors
-		    }
+		    document.getElementById('response').innerHTML =`<p>${data}</p>`;
 		})
-		.catch(function(error) {
-      		// proccess network errors
-  		});
 	})
 	
 </script>
